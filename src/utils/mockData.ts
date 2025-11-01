@@ -117,7 +117,7 @@ export const generateTicketTiers = (eventId: string): TicketTier[] => {
   ];
 };
 
-export const generateMockBookings = (count: number = 50): Booking[] => {
+export const generateMockBookings = (count: number = 150): Booking[] => {
   const bookings: Booking[] = [];
   for (let i = 0; i < count; i++) {
     const event = faker.helpers.arrayElement(mockEvents);
@@ -126,8 +126,10 @@ export const generateMockBookings = (count: number = 50): Booking[] => {
       id: `booking-${i + 1}`,
       eventId: event.id,
       eventTitle: event.title,
-      userId: `user-${faker.number.int({ min: 1, max: 10 })}`,
+      userId: `user-${faker.number.int({ min: 1, max: 25 })}`,
       userName: faker.person.fullName(),
+      age: faker.number.int({ min: 18, max: 65 }),
+      gender: faker.helpers.arrayElement(['Male', 'Female', 'Other']),
       quantity,
       totalPrice: event.price.min * quantity * 1.05,
       bookingDate: faker.date.recent({ days: 30 }),

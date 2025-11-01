@@ -11,11 +11,18 @@ import BookingIntegrity from './pages/BookingIntegrity';
 import DynamicPricingDashboard from './pages/DynamicPricingDashboard';
 import UserDashboard from './pages/UserDashboard';
 import Chatbot from './components/Chatbot';
+import { useTheme } from './context/ThemeContext';
 
 function App() {
+  const { theme } = useTheme();
+  
+  React.useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
+
   return (
     <Router>
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+      <div className="min-h-screen bg-background">
         <Navbar />
         <main>
           <Routes>

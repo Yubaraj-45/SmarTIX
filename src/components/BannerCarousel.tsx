@@ -8,8 +8,8 @@ import { generateMockEvents } from '../utils/mockData';
 const bannerSlidesData = [
   {
     eventTitle: 'IPL 2025 Finals',
-    image: 'https://images.unsplash.com/photo-1629280179425-4b156a7c9011?q=80&w=2070&auto=format&fit=crop',
-    alt: 'A brightly lit cricket stadium at night during a match',
+    image: 'https://images.unsplash.com/photo-1599554151244-8c03b3a3a41a?q=80&w=2070&auto=format&fit=crop',
+    alt: 'A packed cricket stadium under bright lights during a night match',
     content: {
       title: 'IPL 2025 Finals',
       description: 'Witness the crowning of the champion! Early bird tickets now available with 15% off.',
@@ -18,8 +18,8 @@ const bannerSlidesData = [
   },
   {
     eventTitle: 'Stand-Up Comedy Night',
-    image: 'https://images.unsplash.com/photo-1543794532-9b2834c68494?q=80&w=2070&auto=format&fit=crop',
-    alt: 'A comedian on a dimly lit stage holding a microphone',
+    image: 'https://images.unsplash.com/photo-1583624792939-3bbf9563483a?q=80&w=2070&auto=format&fit=crop',
+    alt: 'A comedian on stage, silhouetted against a bright spotlight',
     content: {
       title: 'Stand-Up Comedy Night',
       description: 'Get ready for a night of laughter with top comedians. Tickets starting from just ₹499.',
@@ -28,8 +28,8 @@ const bannerSlidesData = [
   },
   {
     eventTitle: 'Sunburn Music Festival 2025',
-    image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1974&auto=format&fit=crop',
-    alt: 'A large crowd at a music festival with colorful stage lights',
+    image: 'https://images.unsplash.com/photo-1561489396-888724a1543d?q=80&w=2070&auto=format&fit=crop',
+    alt: 'A massive crowd at a music festival with an elaborate stage and laser show',
     content: {
       title: 'Sunburn Festival 2025',
       description: 'The biggest music festival is back! Phase 1 tickets are now live. Don\'t miss out!',
@@ -38,8 +38,8 @@ const bannerSlidesData = [
   },
   {
     eventTitle: 'Tech Summit India 2025',
-    image: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=1974&auto=format&fit=crop',
-    alt: 'A team of professionals collaborating in a modern office space',
+    image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2232&auto=format&fit=crop',
+    alt: 'A diverse group of professionals in a modern conference setting, networking and collaborating',
     content: {
       title: 'Tech Summit India 2025',
       description: 'Join industry leaders and innovators to explore the future of technology.',
@@ -83,7 +83,7 @@ const BannerCarousel: React.FC = () => {
   }, [emblaApi]);
 
   return (
-    <div className="relative bg-slate-200 dark:bg-slate-900 w-full">
+    <div className="relative bg-secondary w-full">
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
           {bannerSlides.map((slide, index) => {
@@ -92,11 +92,11 @@ const BannerCarousel: React.FC = () => {
               <Link
                 to={`/event/${slide.eventId}`}
                 key={index}
-                className="block flex-shrink-0 w-full relative h-64 md:h-80 lg:h-[400px] bg-cover bg-center"
+                className="block flex-shrink-0 w-full relative h-64 md:h-80 lg:h-[450px] bg-cover bg-center"
                 style={{ backgroundImage: `url(${slide.image})` }}
                 aria-label={slide.alt}
               >
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white p-4">
                   <motion.h2 
                       className="text-3xl md:text-5xl font-bold mb-4"
@@ -119,7 +119,7 @@ const BannerCarousel: React.FC = () => {
                       animate={isSelected ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                       transition={{ delay: 0.6, duration: 0.5 }}
                   >
-                      <button className="px-6 py-3 bg-cyan-500 text-white rounded-lg font-semibold hover:bg-cyan-600 transition-colors shadow-lg">
+                      <button className="px-6 py-3 bg-primary text-primary-foreground rounded-md font-semibold hover:bg-primary/90 transition-colors shadow-lg">
                           {slide.content.buttonText}
                       </button>
                   </motion.div>

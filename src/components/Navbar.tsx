@@ -16,7 +16,7 @@ const Dropdown: React.FC<{ button: React.ReactNode; children: React.ReactNode }>
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 10 }}
-          className="absolute right-0 mt-2 w-56 origin-top-right bg-white dark:bg-slate-800 divide-y divide-slate-200 dark:divide-slate-700 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
+          className="absolute right-0 mt-2 w-56 origin-top-right bg-popover text-popover-foreground divide-y divide-border rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
           onMouseLeave={() => setIsOpen(false)}
         >
           <div className="py-1">{children}</div>
@@ -48,22 +48,22 @@ const Navbar: React.FC = () => {
   ];
 
   const dashboardLinks = [
-    { name: 'Organizer Analytics', path: '/dashboard/organizer' },
+    { name: 'Organizer Intelligence', path: '/dashboard/organizer' },
     { name: 'Dynamic Pricing', path: '/dashboard/dynamic-pricing' },
     { name: 'Booking Integrity', path: '/dashboard/booking-integrity' },
     { name: 'My Dashboard', path: '/dashboard/user' },
   ];
 
   return (
-    <nav className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700/50 sticky top-0 z-50">
+    <nav className="bg-background/80 backdrop-blur-md border-b border-border sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center space-x-2 flex-shrink-0">
-            <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
               <Sparkles className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-cyan-500 to-teal-500 text-gradient">
-              EventIQ
+            <span className="text-xl font-bold text-gradient">
+              SmarTIX
             </span>
           </Link>
 
@@ -71,23 +71,23 @@ const Navbar: React.FC = () => {
             <form onSubmit={handleSearch} className="w-full max-w-md">
               <div className="relative">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <Search className="h-5 w-5 text-slate-500 dark:text-slate-400" />
+                  <Search className="h-5 w-5 text-muted-foreground" />
                 </div>
                 <input
                   type="text"
                   placeholder="Search for events, artists, venues..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-slate-900 dark:text-slate-200 placeholder-slate-500 dark:placeholder-slate-500"
+                  className="w-full pl-10 pr-4 py-2 bg-secondary border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-foreground placeholder-muted-foreground"
                 />
               </div>
             </form>
           </div>
           
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-2">
             <Dropdown
               button={
-                <span className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-cyan-500 dark:hover:text-cyan-400 flex items-center">
+                <span className="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center px-3 py-2 rounded-md">
                   Dashboards <ChevronDown className="w-4 h-4 ml-1" />
                 </span>
               }
@@ -97,51 +97,54 @@ const Navbar: React.FC = () => {
                   key={link.path}
                   to={link.path}
                   className={`block px-4 py-2 text-sm ${
-                    location.pathname === link.path ? 'bg-slate-100 dark:bg-slate-700 text-cyan-500 dark:text-cyan-400' : 'text-slate-700 dark:text-slate-300'
-                  } hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-cyan-500 dark:hover:text-cyan-400`}
+                    location.pathname === link.path ? 'bg-accent text-accent-foreground' : 'text-popover-foreground'
+                  } hover:bg-accent hover:text-accent-foreground`}
                 >
                   {link.name}
                 </Link>
               ))}
             </Dropdown>
             <ThemeSwitcher />
-            <button className="flex items-center space-x-2 px-4 py-2 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition-colors">
+            <button className="flex items-center space-x-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
               <User className="w-4 h-4" />
               <span className="text-sm font-medium">Sign In</span>
             </button>
           </div>
 
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg"
-          >
-            {mobileMenuOpen ? (
-              <X className="w-6 h-6 text-slate-500 dark:text-slate-400" />
-            ) : (
-              <Menu className="w-6 h-6 text-slate-500 dark:text-slate-400" />
-            )}
-          </button>
+          <div className="flex md:hidden items-center space-x-2">
+            <ThemeSwitcher />
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 hover:bg-accent rounded-lg"
+            >
+              {mobileMenuOpen ? (
+                <X className="w-6 h-6 text-muted-foreground" />
+              ) : (
+                <Menu className="w-6 h-6 text-muted-foreground" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
       {mobileMenuOpen && (
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="md:hidden bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-700"
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          className="md:hidden bg-background border-t border-border"
         >
           <div className="px-4 pt-4 pb-3 space-y-3">
             <form onSubmit={handleSearch} className="w-full">
               <div className="relative">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <Search className="h-5 w-5 text-slate-500 dark:text-slate-400" />
+                  <Search className="h-5 w-5 text-muted-foreground" />
                 </div>
                 <input
                   type="text"
                   placeholder="Search..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-slate-200"
+                  className="w-full pl-10 pr-4 py-2 bg-secondary border border-border rounded-lg text-foreground"
                 />
               </div>
             </form>
@@ -152,15 +155,15 @@ const Navbar: React.FC = () => {
                 onClick={() => setMobileMenuOpen(false)}
                 className={`block px-4 py-2 rounded-lg transition-colors ${
                   location.pathname === link.path
-                    ? 'bg-slate-100 dark:bg-slate-800 text-cyan-500 dark:text-cyan-400'
-                    : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                    ? 'bg-accent text-accent-foreground'
+                    : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
                 }`}
               >
                 {link.name}
               </Link>
             ))}
-             <div className="border-t border-slate-200 dark:border-slate-700 pt-3">
-                <h3 className="px-4 text-sm font-semibold text-slate-500 dark:text-slate-500">Dashboards</h3>
+             <div className="border-t border-border pt-3">
+                <h3 className="px-4 text-sm font-semibold text-muted-foreground">Dashboards</h3>
                 <div className="mt-2 space-y-1">
                 {dashboardLinks.map((link) => (
                     <Link
@@ -169,8 +172,8 @@ const Navbar: React.FC = () => {
                     onClick={() => setMobileMenuOpen(false)}
                     className={`block px-4 py-2 rounded-lg transition-colors ${
                         location.pathname === link.path
-                        ? 'bg-slate-100 dark:bg-slate-800 text-cyan-500 dark:text-cyan-400'
-                        : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                        ? 'bg-accent text-accent-foreground'
+                        : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
                     }`}
                     >
                     {link.name}
@@ -178,12 +181,11 @@ const Navbar: React.FC = () => {
                 ))}
                 </div>
             </div>
-            <div className="flex items-center justify-between mt-4">
-                <button className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-cyan-500 text-white rounded-lg">
+            <div className="mt-4">
+                <button className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-primary text-primary-foreground rounded-md">
                 <User className="w-4 h-4" />
                 <span className="text-sm font-medium">Sign In</span>
                 </button>
-                <ThemeSwitcher />
             </div>
           </div>
         </motion.div>

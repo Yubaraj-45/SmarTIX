@@ -56,6 +56,8 @@ export interface Booking {
   eventTitle: string;
   userId: string;
   userName: string;
+  age: number;
+  gender: 'Male' | 'Female' | 'Other';
   quantity: number;
   totalPrice: number;
   bookingDate: Date;
