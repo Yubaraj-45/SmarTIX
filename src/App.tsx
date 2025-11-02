@@ -12,9 +12,11 @@ import DynamicPricingDashboard from './pages/DynamicPricingDashboard';
 import UserDashboard from './pages/UserDashboard';
 import Chatbot from './components/Chatbot';
 import { useTheme } from './context/ThemeContext';
+import { useAuth } from './context/AuthContext';
 
 function App() {
   const { theme } = useTheme();
+  const { session } = useAuth();
   
   React.useEffect(() => {
     document.body.className = theme;
@@ -22,7 +24,7 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-background">
+      <div className={`min-h-screen bg-background ${!session ? 'overflow-hidden' : ''}`}>
         <Navbar />
         <main>
           <Routes>
@@ -38,7 +40,7 @@ function App() {
             <Route path="/dashboard/user" element={<UserDashboard />} />
           </Routes>
         </main>
-        <Chatbot />
+        {session && <Chatbot />}
       </div>
     </Router>
   );

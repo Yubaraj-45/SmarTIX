@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Sparkles, Search, User, Menu, X, ChevronDown } from 'lucide-react';
+import { Sparkles, Search, User, Menu, X, ChevronDown, LogOut } from 'lucide-react';
 import ThemeSwitcher from './ThemeSwitcher';
+import { useAuth } from '../context/AuthContext';
 
 const Dropdown: React.FC<{ button: React.ReactNode; children: React.ReactNode }> = ({ button, children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,6 +32,7 @@ const Navbar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
+  const { user, signOut, showAuthModal } = useAuth();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -105,10 +107,17 @@ const Navbar: React.FC = () => {
               ))}
             </Dropdown>
             <ThemeSwitcher />
-            <button className="flex items-center space-x-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
-              <User className="w-4 h-4" />
-              <span className="text-sm font-medium">Sign In</span>
-            </button>
+            {user ? (
+               <button onClick={signOut} className="flex items-center space-x-2 px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-accent transition-colors">
+                <LogOut className="w-4 h-4" />
+                <span className="text-sm font-medium">Sign Out</span>
+              </button>
+            ) : (
+              <button onClick={showAuthModal} className="flex items-center space-x-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
+                <User className="w-4 h-4" />
+                <span className="text-sm font-medium">Sign In</span>
+              </button>
+            )}
           </div>
 
           <div className="flex md:hidden items-center space-x-2">
@@ -182,10 +191,17 @@ const Navbar: React.FC = () => {
                 </div>
             </div>
             <div className="mt-4">
-                <button className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-primary text-primary-foreground rounded-md">
-                <User className="w-4 h-4" />
-                <span className="text-sm font-medium">Sign In</span>
-                </button>
+                 {user ? (
+                    <button onClick={() => { signOut(); setMobileMenuOpen(false); }} className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-secondary text-secondary-foreground rounded-md">
+                        <LogOut className="w-4 h-4" />
+                        <span className="text-sm font-medium">Sign Out</span>
+                    </button>
+                ) : (
+                    <button onClick={() => { showAuthModal(); setMobileMenuOpen(false); }} className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-primary text-primary-foreground rounded-md">
+                        <User className="w-4 h-4" />
+                        <span className="text-sm font-medium">Sign In</span>
+                    </button>
+                )}
             </div>
           </div>
         </motion.div>
